@@ -37,7 +37,7 @@ $$J(\theta)=logL(\theta)=\prod_{i=1}^{i=n}{logP(y|x,\theta)}=\sum_{i=1}^{i=n}{y^
 > 前者$\theta$是变量而后者是常量或者给定值
 
 Q6. 牛顿法的求解过程 <br>
-A6. 牛顿法采用不断迭代$x_{(i+1)}=x_i - \frac{f^{i阶导数}(x_i)}{f^{i+1阶导数}(x_{(i+1)})}$求解出代价函数的零点获得最优解
+A6. 牛顿法采用不断迭代$x_{(i+1)}=x_i - \frac{f^{i阶导数}(x_i)}{f^{i+1阶导数}(x_{(i+1)})}$求解出代价函数导数的零点获得最优解
 
 Q7. 从二分类到多分类的几种方法以及其各自的优缺点 <br>
 A7. 1对其余: 分出单独某一类以及其他类; 1对1: 区分待判定样本是第$i$类还是第$j$类(需要$n(n-1)/2$个分类器然后再统计最高票数)
@@ -65,12 +65,19 @@ $$ =X^TX\theta + X^TY$$
 - 加入L1, L2正则其表达式以及其最优解
 $$J(\theta)=\frac{1}{2}(X\theta - Y)^T(X\theta - Y) + \frac{\lambda}{2}\sum_{j=1}^{j=n}|\theta_j|^q$$
 采用拉格朗日乘子可得
-$$\theta=(X^TX)^{-1}X^TY \quad \rm{s.t. \,} \italic{\sum_{j=1}^{j=n}|\theta_j|^q < \lambda}$$
+$$\theta=(X^TX)^{-1}X^TY \quad \rm{s.t. \,} \it{\sum_{j=1}^{j=n}|\theta_j|^q < \lambda}$$
 
 - 使用概率的方法推导LR求解过程
+$y^{(i)}=\theta^Tx^{(i)}+\epsilon^{(i)}$其中$\epsilon^{(i)}$表示经验误差或者非模型影响因素.<br>
+由于$y^{(i)}$的分布与$\epsilon$保持一致,则有
+$$P(y^{(i)}|x^{(i)};\theta)=\frac{1}{\sqrt{2\pi}\sigma}exp(\frac{(y^{(i)} - \theta^Tx^{(i)})^2}{2\sigma^2})$$
+采用MLE作为代价函数可得:
+$$J(\theta)=L(\theta)=log\prod_{i=1}^{i=n}{P(y^{(i)}|x^{(i)};\theta)}$$
+$$=\sum_{i=1}^{i=n}{log\frac{1}{\sqrt{2\pi}\sigma}exp(\frac{(y^{(i)} - \theta^Tx^{(i)})^2}{2\sigma^2})}$$
+$$=nlog\frac{1}{\sqrt{2\pi}\sigma}+\frac{1}{2\sigma^2}\sum_{i=1}^{i=n}{(y^{(i)}-\theta^Tx)^2}$$
+> 由上可知, 采用MLE的方法计算LR与LMS做为代价函数是等价的
+
 
 [1]: https://en.wikipedia.org/wiki/Trace_(linear_algebra)
 [2]: https://en.wikipedia.org/wiki/Matrix_calculus
-
-
 
